@@ -52,10 +52,6 @@ var externalService = Components.classes["@mozilla.org/uriloader/external-protoc
 var ios = Components.classes["@mozilla.org/network/io-service;1"]
     .getService(Components.interfaces.nsIIOService);
 
-const alert = Components.classes['@mozilla.org/alerts-service;1']
-                  .getService(Components.interfaces.nsIAlertsService)
-                  .showAlertNotification;
-
 
 /***********************************************************
 class definition
@@ -102,7 +98,6 @@ FakeGOM.prototype =
 
 	if (data == null)	    
 	    {
-		alert('Slurp failure');
 		Components.utils.reportError("fakegom:failed slurp: " + second_url);
 	    }
 	else
@@ -127,7 +122,7 @@ FakeGOM.prototype =
 		    {    
 			var appURL= "http" + reAnswer[1].substring(4);
 
-			externalService.loadURI(ios.newURI(unescape(appURL.replace(/&amp;/g,"&"),null,null));
+			externalService.loadURI(ios.newURI(unescape(appURL.replace(/&amp;/g,"&")),null,null));
 		    }
 
 	    }
