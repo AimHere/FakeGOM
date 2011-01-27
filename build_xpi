@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+
+$name = "fakegom";
+$metafile = "install.rdf";
+
+open (FILE,"addon/".$metafile) or die "Can't open ".$metafile."\n";
+
+do {
+  $i = <FILE>;
+  }
+  until ($i =~ /em:version>(.*)<\/em:version/);
+
+$ver=$1;
+
+if (length($ver)==0)
+  {
+    die "No version string in $metafile\n";
+  }
+
+
+
+print "$name, version $ver detected, zipping\n";
+if (-f "./$name-$ver.xpi") { unlink "./$name-$ver.xpi"; }
+chdir ("addon/");
+system ("zip -r ../$name-$ver.xpi . -x \\*~ ");
+print "Done\n";
+

@@ -1,0 +1,5 @@
+component {917c40e0-16a1-11e0-ac64-0800200c9a66} components/FakeGOM.js
+#contract  fakegom@make.gsl.go/fakegom;1 917c40e0-16a1-11e0-ac64-0800200c9a66
+contract  @mozilla.org/network/protocol;1?name=gomcmd {917c40e0-16a1-11e0-ac64-0800200c9a66}
+
+content   fakegom chrome/content/

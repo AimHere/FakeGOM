@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<prefwindow id="fakegom-prefs"
+	    title="FakeGOM Preferences"
+	    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  
+  <seperator class="groove" orient="horizontal" />
+  <prefpane label="FakeGOM Plugin Preferences">
+    <preferences>
+      <preference id="fakegom-debugmode" name="extensions.fakegom.debugmode" type="bool"/>
+    </preferences>
+    <groupbox style="border:1px solid; -moz-border-radius: 5px; padding: 5px;" tooltiptext="Boring FakeGOM 'about' blurb">
+      <description ></description>
+      <description style="font-weight:bold;">FakeGOM</description>
+      <description ></description>
+      <description>Redirect GomPlayer streams to your app of choice,</description>
+      <description>version 0.1.3 by David Sinclair, copyright 2011.</description>
+      <description></description>
+      <description></description>
+      <description>As you might expect from the name, neither I nor this addon have any connection</description>
+      <description>to Gretech Online Media, or any of it's subsidiaries, except that I might </description>
+      <description>subscribe to some of their streams from time to time. Therefore, the use of </description>
+      <description>'GOM' in the name should not ever be construed as an endorsement of this </description>
+      <description>software by Gretech or anyone affiliated with Gretech.</description>
+      <description></description>
+      <description></description>
+    </groupbox>
+    <hbox align="right" noinitialfocus="true">
+      <checkbox noinitialfocus="true" label="Show debug messages" id="debugmode" dir="rtl" tooltiptext="Show debug messages in Javascript Error Console" preference="fakegom-debugmode"/>
+      <spacer orient="vertical"/>
+    </hbox>
+  </prefpane>    
+</prefwindow>
+

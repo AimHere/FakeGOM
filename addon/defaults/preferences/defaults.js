@@ -1,0 +1,1 @@
+prefs("fakegom.debugmode",false);
