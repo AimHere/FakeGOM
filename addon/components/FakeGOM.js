@@ -1,7 +1,6 @@
-
 /**********************************************************
-FakeGOM Firefox plugin for handling gomcmd: and gomp2p:    
-protocols, for purposes of bringing the GSL to all you good
+FakeGOM Firefox plugin for handling gomcmd: protocol
+, for purposes of bringing the GSL to all you good
 people out there in Linux-land. BSD, Mac, and even Windows
 people are welcome to use it too, of course.
 
@@ -55,14 +54,6 @@ var ios = Cc["@mozilla.org/network/io-service;1"]
 var prefs = Cc["@mozilla.org/preferences-service;1"]
     .getService(Ci.nsIPrefService).getBranch("extensions.fakegom.");
       
-function debugSpew(message)
-{
-    // Check for debugmode, if debugmode spew debug spam
-
-    var spew = true;
-    var spew = prefs.getBoolPref("debugmode");
-    if (spew) Cu.reportError("fakegom:" + message);
-};
 
 
 /***********************************************************
@@ -83,16 +74,34 @@ FakeGOM.prototype =
     nsIProtocolHandler.URI_NOAUTH |
     nsIProtocolHandler.URI_LOADABLE_BY_ANYONE, 
 
+    debugSpew: function(message)
+    {
+	// Check for debugmode, if debugmode spew debug spam
+	try 
+	    {
+		var spew = prefs.getBoolPref("debugmode");
+		if (spew) Cu.reportError("fakegom:" + message);
+	    }
+	catch(NS_ERROR_UNEXPECTED)
+	    {
+		//Report the error if an exception hits. Doesn't hurt much
+		Cu.reportError("fakegom: EXCEPTION: " + message);
+	    }
+	
+
+    },
+
+
     allowPort: function(port, scheme) 
     {
-	debugSpew("allowPort");
+	this.debugSpew("allowPort");
 	// We don't need no steenking ports
 	return false;
     },
 
     newURI: function(spec,charset,baseURI)
     {
-	//	debugSpew("newURI");
+	//	this.debugSpew("newURI");
 	var uri = Cc["@mozilla.org/network/simple-uri;1"].createInstance(Ci.nsIURI);
 	uri.spec=spec;
 	return uri;
@@ -110,11 +119,11 @@ FakeGOM.prototype =
 
 	if (data == null)	    
 	    {
-		debugSpew("failed slurp: " + second_url);
+		this.debugSpew("failed slurp: " + second_url);
 	    }
 	else
 	    {
-		// Better here to trap the <ref href = "wibble" and treat differently if it's gomp2p: or other:
+		// Might be better to look at <ref href = "wibble" and treat differently if it's gomp2p: or other:
 		
 		var refree =   /LiveAddr=(.*)\&amp;Format=(...)/; //Free GSL stream
 		var reunfree = /<ref.*href=\"(.*)\"/i;            //Unfree GSL stream
@@ -128,15 +137,15 @@ FakeGOM.prototype =
 		
 		if (reAnswer==null)
 		    {	       
-			debugSpew("Regex fail(2):" + data);
+			this.debugSpew("Regex fail(2):" + data);
 		    }
 		else
 		    {    
 			var appURL= "http" + reAnswer[1].substring(4);
 			
 			//Optional debug messages
-			debugSpew("html: " + data);
-			debugSpew("html: " + unescape(appURL.replace(/&amp;/g,"&")));
+			this.debugSpew("html: " + data);
+			this.debugSpew("html: " + unescape(appURL.replace(/&amp;/g,"&")));
 			
 
 			//There may be local URLs that need to be handled too.
@@ -159,11 +168,11 @@ FakeGOM.prototype =
 
 	var reAnswer=regEx.exec(mainURL);
 
-	debugSpew("newChannel");
+	this.debugSpew("newChannel");
 	
 	if (reAnswer==null)
 	    {	       
-		debugSpew("Regex fail(1):" + mainURL);
+		this.debugSpew("Regex fail(1):" + mainURL);
 	    }
 	else
 	    {    
@@ -192,6 +201,5 @@ if (XPCOMUtils.generateNSGetFactory)
 else
     {
 	var NSGetModule = XPCOMUtils.generateNSGetModule([FakeGOM]);
-	//Can't use debugSpew here, since the debugmode entry isn't created yet
 	Cu.reportError("fakegom: Registering Firefox 3.* module");
     }

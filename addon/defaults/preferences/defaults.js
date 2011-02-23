@@ -1,1 +1,1 @@
-prefs("fakegom.debugmode",false);
+pref("extensions.fakegom.debugmode",false);
