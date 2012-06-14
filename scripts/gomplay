@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#Command lines pilfered from gomstreamer
+
+#This is my vlc command.
+wget -U kPeerClient --tries 1 "$1" -q -O - | vlc -v - --file-caching 30000 vlc://quit 2> /tmp/gomlog
+
+#This is my guess as to a mac command
+#curl -A kPeerClient  "$1" -o - | /Applications/VLC.app/Contents/MacOS/VLC --file-caching 30000 - vlc://quit
+#curl -A kPeerClient  "$1" -o - | vlc --file-caching 30000 - vlc://quit
